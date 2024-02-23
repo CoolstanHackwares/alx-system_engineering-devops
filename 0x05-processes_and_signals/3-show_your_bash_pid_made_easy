@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# a script that displays the PID, along with the process name, of processes whose name contain the word bash
+# the use of ps is forbidden
+
+# shellcheck disable=SC2009
+pgrep -l bash
