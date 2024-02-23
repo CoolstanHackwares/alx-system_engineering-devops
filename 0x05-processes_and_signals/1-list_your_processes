@@ -4,4 +4,4 @@
 # Display the processes in a user-oriented format
 # Show the process hierarchy
 
-ps aux --forest --sort=-%cpu,%mem
+ps auxf
