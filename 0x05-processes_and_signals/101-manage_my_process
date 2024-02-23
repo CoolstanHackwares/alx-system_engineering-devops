@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# An init script that manages "manage_my_process"
+
+if [ "${1}" == "start" ];
+then
+	./manage_my_process & pid="$!"
+	echo "$pid" > /var/run/my_process.pid
+	echo "manage_my_process started with PID $pid"
+elif [ "${1}" == "stop" ];
+then
+	if [ -e /var/run/my_process.pid ];
+then
+	pid=$(cat /var/run/my_process.pid)
+	echo "Stopping manage_my_process with PID $pid"
+	kill "$pid"
+	rm /var/run/my_process.pid
+	echo "manage_my_process stopped"
+
+else
+	echo "manage_my_process is not running."
+fi
+
+elif [ "${1}" == "restart" ];
+then
+	if [ -e /var/run/my_process.pid ];
+then
+	pid=$(cat /var/run/my_process.pid)
+	echo "Stopping manage_my_process with PID $pid"
+	kill "$pid"
+	rm /var/run/my_process.pid
+	echo "manage_my_process stopped"
+fi
+
+	./manage_my_process & pid="$!"
+	echo "$pid" > /var/run/my_process.pid
+	echo "manage_my_process restarted with PID $pid"
+else
+	echo "Usage: manage_my_process {start|stop|restart}"
+fi
