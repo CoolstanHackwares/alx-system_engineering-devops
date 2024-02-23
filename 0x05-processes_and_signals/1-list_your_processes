@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# a script that displays a list of currently running processes
+# show all processes, for all users, including those which might not have a TTY
+# Display the processes in a user-oriented format
+# Show the process hierarchy
+
+ps aux --forest --sort=-%cpu,%mem
