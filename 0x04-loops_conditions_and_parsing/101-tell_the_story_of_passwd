@@ -7,5 +7,5 @@ do
 # Display information about the user
 
 	echo "The user $username is part of the $gid gang, lives in $home, and rides $shell."
-	echo "USER ID's place is protected by the passcode $password, more info about the user here: $info"
+	echo "uid's place is protected by the passcode $password, more info about the user here: $info"
 done < /etc/passwd
