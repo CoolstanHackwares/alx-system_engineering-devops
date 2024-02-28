@@ -1,0 +1,5 @@
+#!/usr/bin/env bashi
+# A script that displays listening ports
+# A script that shows the PID and name of the program to which each socket belongs
+
+sudo netstat -lp
