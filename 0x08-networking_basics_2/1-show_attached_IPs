@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# A script that displays all active IPv4 IPs on the machine it's executed on
+
+# Get all active IPV4 addresses
+
+ip_addresses=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+
+# Display the IP addresses
+
+echo "$ip_addresses"
