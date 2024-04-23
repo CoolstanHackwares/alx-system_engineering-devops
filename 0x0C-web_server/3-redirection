@@ -14,7 +14,7 @@ printf %s "server {
     root   /etc/nginx/html;
     index  index.html index.htm;
     location /redirect_me {
-        return 301 https://www.bbc.com/sport/football;
+        return 301 https://github.com/CoolstanHackwares;
     }
 }" > /etc/nginx/sites-available/default
 
