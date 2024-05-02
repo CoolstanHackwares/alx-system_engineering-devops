@@ -3,5 +3,5 @@
 
 sudo sed -i '/listen\s*80;/d' /etc/nginx/sites-available/default
 sudo sed -i '/server_name _;/a \
-    listen 80;' /etc/nginx/sites-available/default
+	listen 80;' /etc/nginx/sites-available/default
 sudo service nginx restart
