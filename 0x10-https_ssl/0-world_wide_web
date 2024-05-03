@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# takes a domain and subdomain as argument and prints out the subdomain infos
+# shellcheck disable=SC2086
+# Information about server domains
 
-output () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" |  awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to "$5 }'
+check_domain() {
+    # Check for a valid domain
+    SUBDOMAINS=("www"  "lb-01" "web-01" "web-02")
+    if [ -z "$2" ]; then
+	for i in "${SUBDOMAINS[@]}"; do
+	    dig "$i.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
+	done
+    else
+	dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
+    fi
 }
 
-if [ "$#" -eq 2 ]
-then
-    output "$2.$1" "$2"
-else
-    output "www.$1" 'www'
-    output "lb-01.$1" 'lb-01'
-    output "web-01.$1" 'web-01'
-    output "web-02.$1" 'web-02'
-fi
+check_domain "$1" "$2"
