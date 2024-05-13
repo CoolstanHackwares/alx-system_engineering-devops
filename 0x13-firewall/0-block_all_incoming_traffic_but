@@ -3,7 +3,7 @@
 #Block all incoming traffic except on the following TCP ports listed below
 #22 (SSH)
 #443 (HTTPS SSL)
-80 (HTTP)
+#80 (HTTP)
 
 sudo apt-get update
 sudo apt-get install ufw
