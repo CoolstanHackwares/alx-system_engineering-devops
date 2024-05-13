@@ -4,7 +4,6 @@
 # 22 (SSH)
 # 443 (HTTPS SSL)
 # 80 (HTTP)
-
 sudo apt-get update
 sudo apt-get install ufw
 sudo ufw default allow outgoing
