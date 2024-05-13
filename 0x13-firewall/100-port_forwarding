@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# A script that modifies the installed ufw firewall
+# Block all incoming traffic except on the following TCP ports listed below
+# 22 (SSH)
+# 443 (HTTPS SSL)
+# 80 (HTTP)
+# Add a port forwarding rule to redirect port 8080 to port 80
+
+sudo apt-get -y update
+sudo apt-get -y install ufw
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+sudo ufw route allow 8080/tcp to 0.0.0.0 port 80
+sudo ufw enable
+
