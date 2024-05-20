@@ -19,7 +19,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     all_employee_data = {}
-    
+
     for user in users_data:
         employee_id = str(user['id'])
         todos_url = base_url + 'todos?userId={}'.format(employee_id)
@@ -29,7 +29,7 @@ if __name__ == "__main__":
             print("Error fetching data:", e)
             continue
 
-        user_tasks = [{"username": user['username'], "task": task['title'], 
+        user_tasks = [{"username": user['username'], "task": task['title'],
                        "completed": task['completed']} for task in todos_data]
         all_employee_data[employee_id] = user_tasks
 
