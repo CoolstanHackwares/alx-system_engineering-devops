@@ -13,7 +13,7 @@ todos_url = "https://jsonplaceholder.typicode.com/todos"
 
 def user_info():
     """ Fetch user info """
-    
+
     correct_output = defaultdict(list)
 
     response = requests.get(todos_url).json()
@@ -41,6 +41,7 @@ def user_info():
 
     if not error:
         print("User ID and Tasks output: OK")
+
 
 if __name__ == "__main__":
     user_info()
