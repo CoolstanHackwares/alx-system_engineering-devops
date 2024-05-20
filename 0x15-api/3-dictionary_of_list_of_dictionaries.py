@@ -9,6 +9,7 @@ from collections import defaultdict
 todos_url = "https://jsonplaceholder.typicode.com/todos"
 users_url = "https://jsonplaceholder.typicode.com/users"
 
+
 def gather_employee_data():
     """ Gather to-do list information of all employees """
     employee_data = defaultdict(list)
@@ -37,6 +38,7 @@ def gather_employee_data():
     # Export data to JSON file
     with open("todo_all_employees.json", "w") as jsonfile:
         json.dump(employee_data, jsonfile, indent=4)
+
 
 if __name__ == "__main__":
     gather_employee_data()
