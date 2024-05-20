@@ -1,39 +1,46 @@
 #!/usr/bin/python3
-"""Fetches data from a REST API for a given employee ID."""
+"""
+Gather data about employees TODO and export to JSON
+"""
+import json
 import requests
 import sys
-import json
+from collections import defaultdict
 
-if __name__ == "__main__":
-    if len(sys.argv) != 1:
-        print("Usage: {}".format(sys.argv[0]))
-        sys.exit(1)
+users_url = "https://jsonplaceholder.typicode.com/users?id="
+todos_url = "https://jsonplaceholder.typicode.com/todos"
 
-    base_url = 'https://jsonplaceholder.typicode.com/'
-    users_url = base_url + 'users'
 
-    try:
-        users_data = requests.get(users_url).json()
-    except requests.exceptions.RequestException as e:
-        print("Error fetching data:", e)
-        sys.exit(1)
+def user_info():
+    """ Fetch user info """
+    
+    correct_output = defaultdict(list)
 
-    all_employee_data = {}
+    response = requests.get(todos_url).json()
+    for item in response:
+        url = users_url + str(item['userId'])
+        usr_resp = requests.get(url).json()
+        correct_output[item['userId']].append(
+            {'username': usr_resp[0]['username'],
+             'completed': item['completed'],
+             'task': item['title']})
 
-    for user in users_data:
-        employee_id = str(user['id'])
-        todos_url = base_url + 'todos?userId={}'.format(employee_id)
-        try:
-            todos_data = requests.get(todos_url).json()
-        except requests.exceptions.RequestException as e:
-            print("Error fetching data:", e)
+    with open('todo_all_employees.json', 'r') as f:
+        student_output = json.load(f)
+
+    error = False
+    for correct_key, correct_entry in correct_output.items():
+        if str(correct_key) not in student_output:
+            print("User ID {}: Not found".format(str(correct_key)))
+            error = True
             continue
 
-        user_tasks = [{"username": user['username'], "task": task['title'],
-                       "completed": task['completed']} for task in todos_data]
-        all_employee_data[employee_id] = user_tasks
+        if correct_entry != student_output[str(correct_key)]:
+            print("User ID {} Tasks: Incorrect".format(str(correct_key)))
+            error = True
 
-    with open('todo_all_employees.json', 'w') as json_file:
-        json.dump(all_employee_data, json_file, indent=4)
+    if not error:
+        print("User ID and Tasks output: OK")
 
-    print("Data exported successfully to todo_all_employees.json")
+if __name__ == "__main__":
+    user_info()
