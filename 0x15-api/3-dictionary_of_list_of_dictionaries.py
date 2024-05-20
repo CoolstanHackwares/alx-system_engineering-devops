@@ -1,47 +1,42 @@
 #!/usr/bin/python3
 """
-Gather data about employees TODO and export to JSON
+Exports to-do list information of all employees to JSON format.
 """
 import json
 import requests
-import sys
 from collections import defaultdict
 
-users_url = "https://jsonplaceholder.typicode.com/users?id="
 todos_url = "https://jsonplaceholder.typicode.com/todos"
+users_url = "https://jsonplaceholder.typicode.com/users"
 
+def gather_employee_data():
+    """ Gather to-do list information of all employees """
+    employee_data = defaultdict(list)
 
-def user_info():
-    """ Fetch user info """
+    # Fetch all to-do items
+    todos = requests.get(todos_url).json()
 
-    correct_output = defaultdict(list)
+    # Group to-do items by user ID
+    for todo in todos:
+        user_id = todo['userId']
+        employee_data[user_id].append({
+            'task': todo['title'],
+            'completed': todo['completed']
+        })
 
-    response = requests.get(todos_url).json()
-    for item in response:
-        url = users_url + str(item['userId'])
-        usr_resp = requests.get(url).json()
-        correct_output[item['userId']].append(
-            {'username': usr_resp[0]['username'],
-             'completed': item['completed'],
-             'task': item['title']})
+    # Fetch usernames for all user IDs
+    users = requests.get(users_url).json()
+    username_map = {user['id']: user['username'] for user in users}
 
-    with open('todo_all_employees.json', 'r') as f:
-        student_output = json.load(f)
+    # Add usernames to employee data
+    for user_id, tasks in employee_data.items():
+        username = username_map.get(user_id, "Unknown")
+        for task in tasks:
+            task['username'] = username
 
-    error = False
-    for correct_key, correct_entry in correct_output.items():
-        if str(correct_key) not in student_output:
-            print("User ID {}: Not found".format(str(correct_key)))
-            error = True
-            continue
-
-        if correct_entry != student_output[str(correct_key)]:
-            print("User ID {} Tasks: Incorrect".format(str(correct_key)))
-            error = True
-
-    if not error:
-        print("User ID and Tasks output: OK")
-
+    # Export data to JSON file
+    with open("todo_all_employees.json", "w") as jsonfile:
+        json.dump(employee_data, jsonfile, indent=4)
 
 if __name__ == "__main__":
-    user_info()
+    gather_employee_data()
