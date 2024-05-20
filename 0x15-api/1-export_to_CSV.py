@@ -11,7 +11,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: {} employee_id".format(sys.argv[0]))
         sys.exit(1)
-    
+
     employee_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com/"
     user = requests.get(
@@ -26,8 +26,8 @@ if __name__ == "__main__":
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for todo in todos:
             writer.writerow([
-                employee_id, 
-                username, 
-                todo.get("completed"), 
+                employee_id,
+                username,
+                todo.get("completed"),
                 todo.get("title")
             ])
