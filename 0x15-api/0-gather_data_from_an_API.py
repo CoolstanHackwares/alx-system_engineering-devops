@@ -10,20 +10,13 @@ if __name__ == "__main__":
 
     employee_id = sys.argv[1]
     base_url = 'https://jsonplaceholder.typicode.com/'
-    endpoint = 'users/{}'.format(employee_id)
-    
+    user_url = base_url + 'users/{}'.format(employee_id)
+    todos_url = base_url + 'todos?userId={}'.format(employee_id)
+
     try:
-        response = requests.get(base_url + endpoint)
-        data = response.json()
-        
-        if 'id' not in data:
-            raise ValueError("Invalid employee ID")
-        
-        todos_url = base_url + 'todos?userId={}'.format(employee_id)
-        todos_response = requests.get(todos_url)
-        todos_data = todos_response.json()
-        
-    except (requests.exceptions.RequestException, ValueError) as e:
+        user_data = requests.get(user_url).json()
+        todos_data = requests.get(todos_url).json()
+    except requests.exceptions.RequestException as e:
         print("Error fetching data:", e)
         sys.exit(1)
 
@@ -31,6 +24,5 @@ if __name__ == "__main__":
     total_tasks = len(todos_data)
 
     print("Employee {} is done with tasks({}/{}):".format(
-        data['name'], len(completed_tasks), total_tasks))
-    for task in completed_tasks:
-        print("\t", task['title'])
+        user_data['name'], len(completed_tasks), total_tasks))
+    [print("\t", task['title']) for task in completed_tasks]
