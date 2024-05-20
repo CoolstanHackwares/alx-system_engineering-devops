@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Fetches data from a REST API for an employee ID and exports it to CSV."""
+import csv
 import requests
 import sys
-import csv
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         fieldnames = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS',
                       'TASK_TITLE']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
- 
+
         writer.writeheader()
         for task in todos_data:
             writer.writerow({
