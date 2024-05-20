@@ -26,7 +26,7 @@ if __name__ == "__main__":
         fieldnames = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS',
                       'TASK_TITLE']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
+ 
         writer.writeheader()
         for task in todos_data:
             writer.writerow({
