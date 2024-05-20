@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""Fetches data from a REST API for an employee ID and exports it to CSV."""
+"""
+Fetches data from a REST API for an employee ID and exports it to CSV.
+"""
+
 import csv
 import requests
 import sys
