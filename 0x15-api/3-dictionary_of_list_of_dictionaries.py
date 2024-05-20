@@ -6,7 +6,7 @@ import json
 
 if __name__ == "__main__":
     if len(sys.argv) != 1:
-        print("Usage: {}" .format(sys.argv[0]))
+        print("Usage: {}".format(sys.argv[0]))
         sys.exit(1)
 
     base_url = 'https://jsonplaceholder.typicode.com/'
