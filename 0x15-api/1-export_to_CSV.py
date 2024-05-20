@@ -31,6 +31,7 @@ if __name__ == "__main__":
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
+        tasks_written = 0
         for task in todos_data:
             writer.writerow({
                 'USER_ID': employee_id,
@@ -38,5 +39,12 @@ if __name__ == "__main__":
                 'TASK_COMPLETED_STATUS': str(task['completed']),
                 'TASK_TITLE': task['title']
             })
+            tasks_written += 1
 
     print("Data exported to", filename)
+
+    # Check if number of tasks written to CSV matches the total number of tasks
+    if tasks_written == len(todos_data):
+        print("Number of tasks in CSV: OK")
+    else:
+        print("Number of tasks in CSV: Incorrect")
